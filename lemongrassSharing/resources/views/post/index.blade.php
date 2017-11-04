@@ -34,5 +34,22 @@
 
         </form>
     </div>
+    <div class="col-sm-6">
+    @foreach ($posts as $post)
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {{$post->title}}
+                </h3>
+            </div>
+            <div class="panel-heading">
+                <p class="panel-body">
+                    {{$post->body}}
+                </p>
+            </div>
+         
+        </div>
+        @endforeach
+    </div>
 </div>
 @endsection
