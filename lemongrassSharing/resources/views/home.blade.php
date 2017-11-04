@@ -19,7 +19,7 @@
 
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation"><a href="#posts">Post</a></li>
+                            <li role="presentation"><a href="/post">Post</a></li>
                             <li role="presentation"><a href="#comments">Comment</a></li>
                         </ul>
                             
