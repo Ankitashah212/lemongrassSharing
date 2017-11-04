@@ -6,7 +6,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
-
+use Image;
 
 class PostController extends Controller
 {
@@ -17,8 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
-        $posts = Post::all();
+        /**sortin to make newest post come first */
+        $posts = Post::all()->sortByDesc('id');
         return view('post.index')->withPosts($posts);
     }
 
@@ -43,15 +43,20 @@ class PostController extends Controller
           
         $this->validate($request, [
             'title' => 'required|max:255',
+            'image' => 'image', /*no validation for image - optional*/            
             'body' => 'required|max:255'
         ]);
+
+
         /** get all input variables from frontend  */
         $post = new Post;
+
         $post->title = $request->title;
         $post->body = $request->body;
         $post->category_id = 1;
         $post->user_id = Auth::user()->id;
         
+        /**adding image */
         
         /** save as a post to DB */
         $post->save();

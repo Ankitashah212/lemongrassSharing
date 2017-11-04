@@ -47,6 +47,9 @@
                     {{$post->body}}
                 </p>
             </div>
+            <div class="panel-footer">        
+                <a href="#" class="btn btn-link like">Comment </a>
+            </div>
          
         </div>
         @endforeach

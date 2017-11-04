@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'PostController@index')->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('home');
 
 /**middleware ensures that user is logged in before accesssing data */
 Route::get('/post', 'PostController@index')->middleware('auth');
