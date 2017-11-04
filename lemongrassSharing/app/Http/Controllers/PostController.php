@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
+
 
 class PostController extends Controller
 {
@@ -16,8 +18,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts = Post::all();
-        return view('post.index')->withPosts($posts);
+        return view('post.index');
     }
 
     /**
@@ -38,26 +39,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+          
         $this->validate($request, [
             'title' => 'required|max:255',
-            'image' => 'image',
             'body' => 'required|max:255'
         ]);
+        /** get all input variables from frontend  */
         $post = new Post;
         $post->title = $request->title;
         $post->body = $request->body;
+        $post->category_id = 1;
         $post->user_id = Auth::user()->id;
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/images/' . $filename);
-            Image::make($image)->resize(800, 600)->save($location);
-            $post->image = $filename;
-        }
+        
+        
+        /** save as a post to DB */
         $post->save();
-          Session::flash('success', 'Post was successfully added');
+        Session::flash('success', 'Yaay you did it!!!');
         return redirect('/post');
-    
+        
     }
 
     /**
