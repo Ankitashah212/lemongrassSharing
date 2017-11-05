@@ -23,6 +23,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/post', 'PostController@index')->middleware('auth');
 Route::post('/post', 'PostController@store')->middleware('auth');
 
+/**sharable link , so that user can fwd it and a freid can see
+ * it without signing in
+ */
+Route::get('/post/{id}', 'PostController@show')->name('post.show');
+
+
 Route::get('/category', 'CategoryController@index')->middleware('auth');
 Route::post('/category', 'CategoryController@store')->middleware('auth');
 Route::get('/post/category/{name}', 'CategoryController@showAll')->name('category.listAll')->middleware('auth');

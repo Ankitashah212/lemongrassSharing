@@ -50,6 +50,19 @@
                    Posted By: {{$post->user->name}}, 
                    {{$post->title}}
                    Category: <div class="label label-default">{{ $post->category['name'] }}</div>
+                   <div class="pull-right">
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ route('post.show', [$post->id]) }}">Show Post</a></li>
+                                  
+                                </ul>
+                            </div>
+                        </div>
+
                 </h3>
             </div>
             <div class="panel-heading">
@@ -58,7 +71,7 @@
                 </p>
             </div>
             <div class="panel-footer">        
-                <a href="#" class="btn btn-link like">Comment </a>
+            <a href="{{ route('post.show', [$post->id]) }}" class="btn btn-link">Comment</a>
             </div>
          
         </div>
