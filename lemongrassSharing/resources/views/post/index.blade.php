@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
          @if (Session::has('success'))
                 <div class="alert alert-success">
                     <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -64,5 +64,12 @@
         </div>
         @endforeach
     </div>
+    <div class="col-sm-2">
+    <label for=""> Click on category to see all listings</label> 
+            @foreach ($categories as $category)
+                <a href="{{ route('category.listAll', [$category->name]) }}" class="label label-default">{{ $category->name }}</a>
+           <br>
+            @endforeach
+        </div>
 </div>
 @endsection

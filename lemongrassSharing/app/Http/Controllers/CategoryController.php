@@ -37,7 +37,7 @@ class CategoryController extends Controller
         $category = Category::all()->where('name', '=', $name)->first();
         if ($category != null) {
             $posts = Post::all()->where('category_id', '=', $category->id)->sortByDesc('id');
-            return view('category.showAll')->withPosts($posts);
+            return view('category.listAll')->withPosts($posts);
         }
         return redirect('/post');
     }
