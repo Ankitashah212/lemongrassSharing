@@ -14,6 +14,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+                <label for="title">New Post</label>
                     <input type="text" name="title" class="form-control" placeholder="Enter your post title">
                     @if ($errors->has('title'))
                         <small class="text-danger">{{ $errors->first('title') }}</small>
@@ -26,7 +27,14 @@
                         <small class="text-danger">{{ $errors->first('body') }}</small>
                     @endif
                 </div>
-                
+                <div class="form-group">
+                <label for="category"> Select category</label>
+                    <select class="form-control" name="category">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <input type="submit" value="Post" class="btn btn-primary btn-block">
             </div>
         </div>
@@ -39,7 +47,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                   Posted By: {{$post->user->name}}, {{$post->title}}
+                   Posted By: {{$post->user->name}}, 
+                   {{$post->title}}
+                   Category: <div class="label label-default">{{ $post->category['name'] }}</div>
                 </h3>
             </div>
             <div class="panel-heading">
