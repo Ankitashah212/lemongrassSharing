@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading"> Welcome {{Auth :: user()->name}}</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -14,14 +14,12 @@
                         </div>
                     @endif
 
-                    Welcome {{Auth :: user()->name}}
-
-
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Your Posts</a></li>
-                      
-                            <li role="presentation"><a href="#comments">Comment</a></li>
+                            <li role="presentation" class="active"><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Your Posts</a></li>
+                            <li role="presentation"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Comments</a></li>
+                            <li role="presentation"><a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Categories</a></li>
+                        
                         </ul>
                             
                         <div role="tabpanel" class="tab-pane active fade in" id="posts">
@@ -47,7 +45,17 @@
 
 
                             </div>
-                      
+
+                        <div role="tabpanel" class="tab-pane fade" id="categories">
+                            {{ Auth::user()->categories()->count() }} Categoreies created
+                            @foreach (Auth::user()->categories as $category)
+                                <div class="panel panel-default">
+                                  <div class="panel-body">
+                                    {{ $category->name }}
+                                  </div>
+                                </div>
+                            @endforeach
+                        </div>
                         </div>
                             
                     </div>
