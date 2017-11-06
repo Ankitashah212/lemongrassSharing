@@ -62,7 +62,7 @@ class PostController extends Controller
         
         /** save as a post to DB */
         $post->save();
-        Session::flash('success', 'Yaay you did it!!!');
+        Session::flash('success', 'Post Created');
         return redirect('/post');
         
     }
@@ -85,9 +85,17 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        if (Auth::user()->id != $post->user_id) {
+            abort(404);
+        }
+        if ($post == null) {
+            abort(404);
+        }
+        $categories = Category::all();
+        return view('post.edit')->withPost($post)->withCategories($categories);
     }
 
     /**
@@ -97,10 +105,33 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+   
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $post = Post::find($id);
+        if (Auth::user()->id != $post->user_id) {
+            abort(404);
+        }
+        if ($post == null) {
+            abort(404);
+        }
+        $this->validate($request, [
+            'title' => "required|max:255|unique:posts,title,$id",
+            'image' => 'image',
+            'body' => 'required|max:255'
+        ]);
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->category_id = $request->category;
+        $post->user_id = Auth::user()->id;
+       
+        $post->save();
+       
+
+        Session::flash('success', 'Post Updated');
+        return redirect('/post');   
+     }
+
 
     /**
      * Remove the specified resource from storage.

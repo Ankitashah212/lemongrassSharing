@@ -58,7 +58,8 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="{{ route('post.show', [$post->id]) }}">Show Post</a></li>
-                                  
+                                    <li><a href="{{ route('post.edit', [$post->id]) }}">Edit Post</a></li>
+
                                 </ul>
                             </div>
                         </div>
