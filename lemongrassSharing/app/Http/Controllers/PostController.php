@@ -129,7 +129,8 @@ class PostController extends Controller
        
 
         Session::flash('success', 'Post Updated');
-        return redirect('/post');   
+        //return redirect()->back();        
+        return redirect('/home');   
      }
 
 
@@ -139,8 +140,19 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if (Auth::user()->id != $post->user_id) {
+            abort(404);
+        }
+        if ($post == null) {
+            abort(404);
+        }
+       
+        $post->delete();
+        Session::flash('success', 'Post deleted');
+        //return redirect()->back();
+        return redirect('/home');   
     }
 }

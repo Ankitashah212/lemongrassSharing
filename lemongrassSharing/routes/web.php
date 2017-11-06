@@ -29,6 +29,9 @@ Route::post('/post', 'PostController@store')->middleware('auth');
 Route::get('/post/{id}', 'PostController@show')->name('post.show');
 Route::get('/post/{id}/edit', 'PostController@edit')->name('post.edit')->middleware('auth');
 Route::put('/post/{id}/edit', 'PostController@update')->name('post.update')->middleware('auth');
+Route::delete('/post/{id}/delete', 'PostController@destroy')->name('post.delete')->middleware('auth');
+
+Route::post('/comment', 'CommentController@index')->middleware('auth');
 
 Route::get('/category', 'CategoryController@index')->middleware('auth');
 Route::post('/category', 'CategoryController@store')->middleware('auth');
