@@ -12,7 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if(Auth::check()){
+        return redirect('/post');
+        
+    }else{
+        return view('welcome');
+        
+    }
 });
 
 Auth::routes();
@@ -36,6 +42,8 @@ Route::post('/comment', 'CommentController@index')->middleware('auth');
 Route::get('/category', 'CategoryController@index')->middleware('auth');
 Route::post('/category', 'CategoryController@store')->middleware('auth');
 Route::get('/post/category/{name}', 'CategoryController@showAll')->name('category.listAll')->middleware('auth');
+
+Route::get('post/search/{word}', 'PostController@search')->name('post.search')->middleware('auth');
 
 
 

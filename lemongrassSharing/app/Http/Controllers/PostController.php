@@ -155,4 +155,16 @@ class PostController extends Controller
         //return redirect()->back();
         return redirect('/home');   
     }
+
+    public function search($word)
+    {
+        if ($word != null) {
+        
+            $posts = Post::all()->where('title', 'like',$word);
+           // ->or('body', 'LIKE', "%$word%");
+            
+            return view('post.search')->withPosts($posts);
+        }
+        return redirect('/post');
+    }
 }
