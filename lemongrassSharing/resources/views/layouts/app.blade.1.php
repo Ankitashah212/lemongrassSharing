@@ -33,13 +33,10 @@
                     </a>
     
                 </div>
-               
+
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Manage Posts</a></li>
-                    <li>
-                            <input class="form-control" type="text" id="word" aria-label="Search"></li>
-                      <li>      <button id= "search" class="btn btn-primary" type="button">Search</button>
-                    </li>
+
                 </ul>
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
@@ -81,14 +78,5 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script>
-    document.getElementById("search").onclick = function () {
-        var word = document.getElementById("word").value;
-        console.log("word is " + word.length);
-        if(word.length > 0){
-            location.href = "/post/search/" + word;
-        }
-    };
-    </script>
 </body>
 </html>

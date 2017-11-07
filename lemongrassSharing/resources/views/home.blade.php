@@ -11,7 +11,6 @@
                     <div>
                       <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Your Posts ({{ Auth::user()->posts()->count() }})</a></li>
-                        <li role="presentation"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Comments</a></li>
                         <li role="presentation"><a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Categories</a></li>
                        </ul>
                       <div class="tab-content">
@@ -39,28 +38,12 @@
                             @endforeach
                         </div>
                   
-                        <div role="tabpanel" class="tab-pane fade" id="comments">
-                            {{ Auth::user()->comments()->count() }} Comments created
-                            @foreach (Auth::user()->comments as $comment)
-                                <div class="panel panel-default">
-                                  <div class="panel-body">
-                                    <div class="col-sm-9">
-                                        {{ $comment->comment }}
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <small><a href="{{ route('post.show', [$comment->post->id]) }}">View Post</a></small>
-                                    </div>
-                                  </div>
-                                </div>
-                            @endforeach
-                         </div>
-                  
                         <div role="tabpanel" class="tab-pane fade" id="categories">
 
                             @foreach (Auth::user()->categories as $category)
                                 <div class="panel panel-default">
                                   <div class="panel-body">
-                                    {{ $category->name }}
+                                  <a href="{{ route('category.listAll', [$category->name]) }}">{{ $category->name }}</a>
                                   </div>
                                 </div>
                             @endforeach

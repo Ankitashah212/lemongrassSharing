@@ -67,6 +67,7 @@
             <div class="panel-heading">
                 <p class="panel-body">
                     {{$post->body}}
+                    {{$post->comment['comment']}}
                 </p>
             </div>
             <div class="panel-footer">        

@@ -8,6 +8,8 @@ use Session;
 use Auth;
 use Image;
 use App\Category;
+use App\Comment;
+
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
@@ -77,7 +79,15 @@ class PostController extends Controller
     public function show($id)
     {    
         $post = Post::find($id);
-        return view('post.show')->withPost($post); 
+       
+        $comment = DB::table('comments')
+        ->join('posts', 'posts.id', '=', 'comments.post_id')
+        ->join('users', 'users.id', '=', 'comments.user_id')
+        ->select('posts.*', 'comment','name')
+        ->where('posts.id', '=', $id)
+        ->get();
+
+        return view('post.show')->withPost($post)->withComments($comment); 
     }
 
     /**

@@ -22,6 +22,8 @@ class CreatePostsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
+        $table->foreign('id')->references('post_id')->on('comments')->onDelete('cascade');
+        
     }
 
     /**
