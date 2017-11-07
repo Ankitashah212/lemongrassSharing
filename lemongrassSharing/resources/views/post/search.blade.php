@@ -7,9 +7,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                   Posted By: {{$post->user->name}}, 
+                   Posted By: {{$post->username}}, 
                    {{$post->title}}
-                   Category: <div class="label label-default">{{ $post->category['name'] }}</div>
+                   Category: <div class="label label-default">{{ $post->cat }}</div>
                    <div class="pull-right">
                             <div class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

@@ -8,6 +8,7 @@ use Session;
 use Auth;
 use Image;
 use App\Category;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -160,9 +161,21 @@ class PostController extends Controller
     {
         if ($word != null) {
         
-            $posts = Post::all()->where('title', 'like',$word);
+           // $posts = Post::all()->where('title', 'like',$word);
            // ->or('body', 'LIKE', "%$word%");
-            
+ /*         
+           $posts = DB::table('posts')
+           ->where('title', 'like', "%$word%")
+           ->get();
+*/
+           $posts = DB::table('posts')
+           ->join('categories', 'posts.category_id', '=', 'categories.id')
+           ->join('users', 'users.id', '=', 'posts.user_id')
+           ->select('posts.*', 'users.name as username', 'categories.name as cat')
+           ->where('title', 'like', "%$word%")
+           ->orwhere('body', 'like', "%$word%")
+           ->get();
+           
             return view('post.search')->withPosts($posts);
         }
         return redirect('/post');
