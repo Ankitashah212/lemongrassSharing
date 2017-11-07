@@ -12,6 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+   .logo{
+        font-size: 20px;
+        font-weight : bold;
+   }
+    
+    </style>
 </head>
 <body>
     <div id="app">
@@ -19,16 +26,9 @@
             <div class="container">
                 <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/post') }}">
+                    <a class="navbar-brand logo" href="{{ url('/post') }}">
                         {{ config('app.name', 'Lemongrass') }}
                     </a>
                 </div>
@@ -38,10 +38,15 @@
                     <ul class="nav navbar-nav">
 
                         <li><a href="{{ url('/home') }}">Manage Posts</a></li>
-                   
+                        <li class="navbar navbar-light bg-light">
+                            <form class="form-inline">
+                                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success " type="submit">Search</button>
+                            </form>
+                        </li>
+      
                     </ul>
-
-                    <!-- Right Side Of Navbar -->
+              <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
