@@ -58,7 +58,6 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="{{ route('post.show', [$post->id]) }}">Show Post</a></li>
-                                  
                                 </ul>
                             </div>
                         </div>
@@ -68,6 +67,7 @@
             <div class="panel-heading">
                 <p class="panel-body">
                     {{$post->body}}
+                    {{$post->comment['comment']}}
                 </p>
             </div>
             <div class="panel-footer">        

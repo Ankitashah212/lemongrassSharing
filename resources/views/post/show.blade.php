@@ -15,12 +15,28 @@
                     </div>
                 </h3>
               </div>
-              <div class="panel-body">
+              <div class="panel-heading">
+              <h3 class="panel-title">
                 {{ $post->body }}
+               </h3>
+               </div>
                
+                             
+                          
+                <div class="panel-body">
+                <label for="">Comments :</label> 
                 <br />
-              
-              </div>
+                    @foreach ($comments as $comm)
+                    
+                        {{ $comm->comment }} By : {{$comm->name}}
+                        <br />
+                    @endforeach
+                </div>
+            
+      
+    </div>
+
+
               <div class="panel-footer">        
 
               @if (Auth::check())

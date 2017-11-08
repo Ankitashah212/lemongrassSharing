@@ -8,6 +8,9 @@ use Session;
 use Auth;
 use Image;
 use App\Category;
+use App\Comment;
+
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -62,7 +65,7 @@ class PostController extends Controller
         
         /** save as a post to DB */
         $post->save();
-        Session::flash('success', 'Yaay you did it!!!');
+        Session::flash('success', 'Post Created');
         return redirect('/post');
         
     }
@@ -76,7 +79,15 @@ class PostController extends Controller
     public function show($id)
     {    
         $post = Post::find($id);
-        return view('post.show')->withPost($post); 
+       
+        $comment = DB::table('comments')
+        ->join('posts', 'posts.id', '=', 'comments.post_id')
+        ->join('users', 'users.id', '=', 'comments.user_id')
+        ->select('posts.*', 'comment','name')
+        ->where('posts.id', '=', $id)
+        ->get();
+
+        return view('post.show')->withPost($post)->withComments($comment); 
     }
 
     /**
@@ -85,9 +96,17 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        if (Auth::user()->id != $post->user_id) {
+            abort(404);
+        }
+        if ($post == null) {
+            abort(404);
+        }
+        $categories = Category::all();
+        return view('post.edit')->withPost($post)->withCategories($categories);
     }
 
     /**
@@ -97,10 +116,34 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+   
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $post = Post::find($id);
+        if (Auth::user()->id != $post->user_id) {
+            abort(404);
+        }
+        if ($post == null) {
+            abort(404);
+        }
+        $this->validate($request, [
+            'title' => "required|max:255|unique:posts,title,$id",
+            'image' => 'image',
+            'body' => 'required|max:255'
+        ]);
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->category_id = $request->category;
+        $post->user_id = Auth::user()->id;
+       
+        $post->save();
+       
+
+        Session::flash('success', 'Post Updated');
+        //return redirect()->back();        
+        return redirect('/home');   
+     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -108,8 +151,43 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if (Auth::user()->id != $post->user_id) {
+            abort(404);
+        }
+        if ($post == null) {
+            abort(404);
+        }
+       
+        $post->delete();
+        Session::flash('success', 'Post deleted');
+        //return redirect()->back();
+        return redirect('/home');   
+    }
+
+    public function search($word)
+    {
+        if ($word != null) {
+        
+           // $posts = Post::all()->where('title', 'like',$word);
+           // ->or('body', 'LIKE', "%$word%");
+ /*         
+           $posts = DB::table('posts')
+           ->where('title', 'like', "%$word%")
+           ->get();
+*/
+           $posts = DB::table('posts')
+           ->join('categories', 'posts.category_id', '=', 'categories.id')
+           ->join('users', 'users.id', '=', 'posts.user_id')
+           ->select('posts.*', 'users.name as username', 'categories.name as cat')
+           ->where('title', 'like', "%$word%")
+           ->orwhere('body', 'like', "%$word%")
+           ->get();
+           
+            return view('post.search')->withPosts($posts);
+        }
+        return redirect('/post');
     }
 }
